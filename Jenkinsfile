@@ -11,7 +11,7 @@ pipeline {
         stage('docker build') {
             steps {
             withDockerRegistry(credentialsId: 'docker-creds', url: 'https://index.docker.io/v1/') {
-                sh "docker build -t za357627acc1/adservice ."
+                sh "docker build -t za357627acc1/cartservice ."
                 }
             }
         }
@@ -19,7 +19,7 @@ pipeline {
         stage('docker push') {
             steps {
             withDockerRegistry(credentialsId: 'docker-creds', url: 'https://index.docker.io/v1/') {
-                sh "docker push za357627acc1/adservice:latest"
+                sh "docker push za357627acc1/cartservice:latest"
                 }
             }
         }
