@@ -3,6 +3,17 @@ plugins {
     id 'com.github.sherter.google-java-format' version '0.9'
     id 'idea'
     id 'application'
+    id "org.sonarqube" version "3.3"
+
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "multi_branch_key"
+        property "sonar.projectName", "multi_branch"
+        property "sonar.host.url", "http://http://3.80.42.48:9000"
+        property "sonar.login", "squ_b23f4631b28d3b96938feb39ea711eb1da6be863"
+    }
 }
 
 repositories {
