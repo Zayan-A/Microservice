@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment{
-        SCANNER_HOME= tool 'sonarqube'
-    }
-
     stages {
         stage('Trivy fs scan') {
             steps {
@@ -12,13 +8,13 @@ pipeline {
             }
         }
 
-    stage('Sonarqube code quality check') {
+        stage('Build and SonarQube Analysis') {
             steps {
-               withSonarQubeEnv("sonarqube") {
-                sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=project-2 -Dsonar.projectKey=multibranch"             
+                script {
+                    // Run Gradle build and SonarQube analysis
+                    sh './gradlew clean build sonarqube'
                 }
             }
         }
-
     }
 }
