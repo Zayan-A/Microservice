@@ -8,7 +8,7 @@ pipeline {
             }
         }
 
-    stage('Sonarqube code quality check') {
+        stage('Sonarqube code quality check') {
             steps {
                withSonarQubeEnv(credentialsId: 'sonarqube-cred') {
                 sh 'sonar-scanner -Dsonar.projectKey=project_key_2 -Dsonar.sources=src'                
