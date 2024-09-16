@@ -2,24 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Build & Tag Docker Image') {
+        stage('Trivy fs scan') {
             steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker build -t za357627acc1/adservice:latest ."
-                    }
+                sh "trivy fs ."
+            }
+        }
+
+    stage('Sonarqube code quality check') {
+            steps {
+               withSonarQubeEnv(credentialsId: 'sonarqube-cred') {
+                sh 'sonar-scanner -Dsonar.projectKey=project_key_2 -Dsonar.sources=src'                
                 }
             }
         }
-        
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push za357627acc1/adservice:latest "
-                    }
-                }
-            }
-        }
+
     }
 }
