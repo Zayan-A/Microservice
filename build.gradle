@@ -4,14 +4,13 @@ plugins {
     id 'idea'
     id 'application'
     id "org.sonarqube" version "3.3"
-
 }
 
 sonarqube {
     properties {
         property "sonar.projectKey", "multi_branch_key"
         property "sonar.projectName", "multi_branch"
-        property "sonar.host.url", "http://http://3.80.42.48:9000"
+        property "sonar.host.url", "http://3.80.42.48:9000"
         property "sonar.login", "squ_b23f4631b28d3b96938feb39ea711eb1da6be863"
     }
 }
@@ -36,8 +35,8 @@ def jacksonDatabindVersion = "2.15.0"
 def protocVersion = "3.22.3"
 
 tasks.withType(JavaCompile) {
-    sourceCompatibility = JavaVersion.VERSION_19
-    targetCompatibility = JavaVersion.VERSION_19
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 ext {
@@ -86,7 +85,6 @@ googleJavaFormat {
     toolVersion '1.17.0'
 }
 
-// Inform IDEs like IntelliJ IDEA, Eclipse or NetBeans about the generated code.
 sourceSets {
     main {
         java {
@@ -99,8 +97,6 @@ sourceSets {
 
 startScripts.enabled = false
 
-// This to cache dependencies during Docker image building. First build will take time.
-// Subsequent build will be incremental.
 task downloadRepos(type: Copy) {
     from configurations.compileClasspath
     into offlineCompile
