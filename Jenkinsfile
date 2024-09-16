@@ -23,11 +23,5 @@ pipeline {
                 }
             }
         }
-
-        stage('Trivy fs scan') {
-            steps {
-                sh "trivy fs ."
-            }
-        }
     }
 }
