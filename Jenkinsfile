@@ -2,25 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Build & Tag Docker Image') {
+        stage('Trivy fs scan') {
             steps {
-                script {
-                    dir('src') {
+                sh "trivy fs ."
+            }
+        }
 
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker build -t za357627acc1/cartservice:latest ."
-                    }
-                        }
+        stage('docker build') {
+            steps {
+            withDockerRegistry(credentialsId: 'docker-creds', url: 'https://index.docker.io/v1/') {
+                sh "docker build -t za357627acc1/adservice ."
                 }
             }
         }
-        
-        stage('Push Docker Image') {
+
+        stage('docker push') {
             steps {
-                script {
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push za357627acc1/cartservice:latest "
-                    }
+            withDockerRegistry(credentialsId: 'docker-creds', url: 'https://index.docker.io/v1/') {
+                sh "docker push za357627acc1/adservice:latest"
                 }
             }
         }
